@@ -10,6 +10,7 @@
 #define COLOR_RESET	"\x1b[0m"
 
 void	change_player_coordinates_for_board(int *player);
+void	change_block_and_dome_coordinates(int *piece);
 void	print_board(char **arr, int *player);
 
 #endif
