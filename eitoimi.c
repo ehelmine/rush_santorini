@@ -5,9 +5,20 @@ void	print_dome(char **arr)
 
 }
 
-void	print_player(char **arr)
+void	print_one_box(char **arr)
 {
-
+	int i = 0;
+	int ii = 0;
+	while (i < 3)
+	{
+		while (ii < 7)
+		{
+			printf("%c", ' ');
+			ii++;
+		}
+		i++;
+		ii = 0;
+	}
 }
 //
 // unicorn	"\u1f984" -> "\U0001f984"
@@ -20,18 +31,42 @@ void	print_player(char **arr)
 //
 void	print_board(char **arr, int *player)
 {
+	int start_x[5] = {1, 8, 15, 22, 29};
+	int start_y[5] = {1, 5, 9, 13, 17};
 	int y = 0;
 	int x = 0;
 	int i = 0;
+	int ii = 0;
 	while (arr[y] != NULL)
 	{
 		while (arr[y][x] != '\0')
 		{
+			i = 0;
+			while (i < 5)
+			{
+				if (y == start_y[i])
+				{
+					ii = 0;
+					while (ii < 5)
+					{
+						if (x == start_x[ii])
+						{
+						//	exit (1);
+							print_one_box(arr);
+							x += 7;
+							i = 5;
+							ii = 5;
+						}
+						ii++;
+					}
+				}
+				i++;
+			}
 			if (x == player[0])
 			{
 				if (y == player[1])
 				{
-					printf(MAGENTA "\U0001F43C" COLOR_RESET);
+					printf(MAGENTA "\U0001f984" COLOR_RESET);
 					x++;
 				}
 				else if (y > 0 && y < 4)
