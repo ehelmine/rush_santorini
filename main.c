@@ -40,8 +40,8 @@ int	main(void)
 	int *piece;
 
 	player = (int*)malloc(sizeof(int) * 2);
-	player[0] = 1;
-	player[1] = 1;
+	player[0] = 0;
+	player[1] = 0;
 	piece = (int*)malloc(sizeof(int) * 2);
 	piece[0] = 1;
 	piece[1] = 1;
