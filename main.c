@@ -37,12 +37,17 @@ int	main(void)
 {
 	char **board;
 	int	*player;
+	int *piece;
 
 	player = (int*)malloc(sizeof(int) * 2);
-	player[0] = 0;
-	player[1] = 0;
+	player[0] = 1;
+	player[1] = 1;
+	piece = (int*)malloc(sizeof(int) * 2);
+	piece[0] = 1;
+	piece[1] = 1;
 	board = get_board();
 	change_player_coordinates_for_board(player);
+	change_block_and_dome_coordinates(piece);
 	print_board(board, player);
 	return (0);
 }
