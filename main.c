@@ -67,6 +67,6 @@ int	main(void)
 	change_block_and_dome_coordinates(block);
 	add_dome_letters_to_board(board, piece);
 	add_block_letters_to_board(board, block, '2');
-	print_board(board, players, piece, block);
+	print_board(board, players);
 	return (0);
 }
