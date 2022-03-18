@@ -2,7 +2,7 @@
 
 void	add_level_letters_to_board(char **board, int *level_coord)
 {
-	int y = 0;
+	int y = 1;
 	int x = 0;
 	int orig_y;
 	int orig_x;
