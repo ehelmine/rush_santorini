@@ -24,14 +24,14 @@ void	check_if_player_is_blocked(char **board, int players[4][2])
 			(p_y + 4 < 19 && p_x + 7 < 34 && board[p_y + 4][p_x + 7] != ' ') &&
 			(p_y + 4 < 19 && p_x + 7 < 34 && board[p_y + 4][p_x + 7] != ' '))
 		{
-			if ((p_y - 4 > 1 && p_x - 7 > 1 && board[p_y - 4][p_x - 7] != '1')
-			&& (p_y - 4 > 1 && p_x > 1 && board[p_y - 4][p_x] != '1') && 
-			(p_y - 4 > 1 && p_x + 7 < 34 && board[p_y - 4][p_x + 7] != '1') &&
-			(p_y > 1 && p_x - 7 > 1 && board[p_y][p_x - 7] != '1') && 
-			(p_y > 1 && p_x + 7 < 34 && board[p_y][p_x + 7] != '1') &&
-			(p_y + 4 < 19 && p_x - 7 > 1 && board[p_y + 4][p_x - 7] != '1') && 
-			(p_y + 4 < 19 && p_x + 7 < 34 && board[p_y + 4][p_x + 7] != '1') &&
-			(p_y + 4 < 19 && p_x + 7 < 34 && board[p_y + 4][p_x + 7] != '1'))
+			if ((p_y - 4 > 1 && p_x - 7 > 1 && board[p_y - 4][p_x - 7] != level + 1)
+			&& (p_y - 4 > 1 && p_x > 1 && board[p_y - 4][p_x] != level + 1) && 
+			(p_y - 4 > 1 && p_x + 7 < 34 && board[p_y - 4][p_x + 7] != level + 1) &&
+			(p_y > 1 && p_x - 7 > 1 && board[p_y][p_x - 7] != level + 1) && 
+			(p_y > 1 && p_x + 7 < 34 && board[p_y][p_x + 7] != level + 1) &&
+			(p_y + 4 < 19 && p_x - 7 > 1 && board[p_y + 4][p_x - 7] != level + 1) && 
+			(p_y + 4 < 19 && p_x + 7 < 34 && board[p_y + 4][p_x + 7] != level + 1) &&
+			(p_y + 4 < 19 && p_x + 7 < 34 && board[p_y + 4][p_x + 7] != level + 1))
 			{
 				winner = 2;
 				loser = 1;
