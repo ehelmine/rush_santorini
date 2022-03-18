@@ -102,7 +102,7 @@ char **init_players(player_info_t *p1, player_info_t *p2, int **board)
 	p1->w1col = wcol;
 //	print_board(board);
 	new_board = get_board();
-	drawing(p1, p2, new_board);
+	drawing(p1, p2, new_board, 0);
 
 	printf("\n");
 	do {
@@ -115,7 +115,7 @@ char **init_players(player_info_t *p1, player_info_t *p2, int **board)
 	p1->w2row = wrow;
 	p1->w2col = wcol;
 //	print_board(board);
-	drawing(p1, p2, new_board);
+	drawing(p1, p2, new_board, 0);
 
 	printf("Player 2 enter worker starting coordinates\n");
 
@@ -129,7 +129,7 @@ char **init_players(player_info_t *p1, player_info_t *p2, int **board)
 	p2->w1row = wrow;
 	p2->w1col = wcol;
 //	print_board(board);
-	drawing(p1, p2, new_board);
+	drawing(p1, p2, new_board, 0);
 
 	printf("\n");
 	do {
@@ -142,7 +142,7 @@ char **init_players(player_info_t *p1, player_info_t *p2, int **board)
 	p2->w2row = wrow;
 	p2->w2col = wcol;
 //	print_board(board);
-	drawing(p1, p2, new_board);
+	drawing(p1, p2, new_board, 0);
 	return (new_board);
 }
 
@@ -160,6 +160,7 @@ void init_board(int **board)
 
 int main(void)
 {
+	int whose_turn_next = 1;
 	int **board = (int **)malloc(sizeof(int) * 7);
 	player_info_t *p1 = (player_info_t *)malloc(sizeof(player_info_t));
 	player_info_t *p2 = (player_info_t *)malloc(sizeof(player_info_t));
@@ -182,7 +183,7 @@ int main(void)
 	//													esim jos laitetaan ruutuun 1,1
 	//													level2:n taso -> taytetaan 1,1 ruutu
 	//													charilla 2
-		drawing(p1, p2, new_board); // <- ja taalla piirretaan
+		drawing(p1, p2, new_board, whose_turn_next); // <- ja taalla piirretaan
 	}
 
 	// free(p1);

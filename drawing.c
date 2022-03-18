@@ -33,7 +33,7 @@ char	**get_board(void)
 	return (board);
 }
 
-void	drawing(player_info_t *p1, player_info_t *p2, char **board)
+void	drawing(player_info_t *p1, player_info_t *p2, char **board, int whose_turn_next)
 {
 	int	players[4][2];
 
@@ -50,5 +50,5 @@ void	drawing(player_info_t *p1, player_info_t *p2, char **board)
 		change_player_coordinates_for_board(players[i++]);
 	print_board(board, players);
 	if (players[3][1] != -1)
-		check_if_player_is_blocked(board, players);
+		check_if_player_is_blocked(board, players, whose_turn_next);
 }
