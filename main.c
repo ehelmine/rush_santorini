@@ -36,18 +36,37 @@ char	**get_board(void)
 int	main(void)
 {
 	char **board;
-	int	*player;
+	int	**players;
 	int *piece;
+	int	*block;
 
-	player = (int*)malloc(sizeof(int) * 2);
-	player[0] = 0;
-	player[1] = 0;
+	players = (int**)malloc(sizeof(int*) * 4);
+	players[0] = (int*)malloc(sizeof(int) * 2);
+	players[0][0] = 1;
+	players[0][1] = 2;
+	players[1] = (int*)malloc(sizeof(int) * 2);
+	players[1][0] = 1;
+	players[1][1] = 1;
+	players[2] = (int*)malloc(sizeof(int) * 2);
+	players[2][0] = 0;
+	players[2][1] = 0;
+	players[3] = (int*)malloc(sizeof(int) * 2);
+	players[3][0] = 4;
+	players[3][1] = 2;
 	piece = (int*)malloc(sizeof(int) * 2);
 	piece[0] = 1;
 	piece[1] = 1;
+	block = (int*)malloc(sizeof(int) * 2);
+	block[0] = 1;
+	block[1] = 2;
 	board = get_board();
-	change_player_coordinates_for_board(player);
+	int i = 0;
+	while (i < 4)
+		change_player_coordinates_for_board(players[i++]);
 	change_block_and_dome_coordinates(piece);
-	print_board(board, player);
+	change_block_and_dome_coordinates(block);
+	add_dome_letters_to_board(board, piece);
+	add_block_letters_to_board(board, block, '2');
+	print_board(board, players, piece, block);
 	return (0);
 }
