@@ -161,7 +161,9 @@ int get_command(player_info_t *player, char **new_board, player_info_t *another,
 		} while(bdir < 0);
 
 	block = is_valid_move(mvdir, player, worker);
+	printf("1 x %i y %i\n", block[0], block[1]);
 	change_block_coordinates(block);
+	printf("2 x %i y %i\n", block[0], block[1]);
 	add_level_letters_to_board(new_board, block);
 	return (0);
 }
@@ -263,7 +265,9 @@ int main(void)
 	while (1)
 	{
 		get_command(p1, new_board, p2, 1);
+		drawing(p1, p2, new_board, 0);
 		get_command(p2, new_board, p1, 2);
+		drawing(p1, p2, new_board, 0);
 	}
 
 	// free(p1);
