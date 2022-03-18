@@ -73,7 +73,9 @@ void	change_block_and_dome_coordinates(int *piece)
 
 void	change_player_coordinates_for_board(int *player)
 {
+	if (player[0] == -1)
+		return ;
 	player[0] = player[0] + 3 + (player[0] * 6);
 	player[1] = player[1] + ((player[1] + 1) * 3) - 1;
-	printf("player x %i player y %i\n", player[0], player[1]);
+//	printf("player x %i player y %i\n", player[0], player[1]);
 }

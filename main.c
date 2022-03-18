@@ -1,72 +1,181 @@
 #include "santorini.h"
-
-void	our_error(char *str)
+/*
+void print_board(int **board)
 {
-	printf("%s\n", str);
-	exit (1);
-}
-
-char	**get_board(void)
-{
-	int fd;
-	char **board;
-	size_t bufsize = 37;
-	char buf[38];
-
-	fd = open("board.txt", O_RDONLY);
-	if (!fd)
-		our_error("open error\n");
-	int i = 0;
-	board = (char **)malloc(sizeof(char *) * 23);
-	if (!board)
-		our_error("malloc error\n");
-	while (i < 21)
+	for (int row = 0; row < 5; row++)
 	{
-		board[i] = (char *)malloc(sizeof(char) * 38);
-		if (!board[i])
-			our_error("malloc error\n");
-		if (read(fd, buf, 37) == -1)
-			our_error("read error\n");
-		strcpy(board[i++], buf);
+		for (int col = 0; col < 5; col++)
+		{
+			if (board[row][col] == 6)
+				printf("%s\t", "A");
+			else if (board[row][col] == 7)
+				printf("%s\t", "X");
+			else
+				printf("%d\t", board[row][col]);
+		}
+		printf("\n");
 	}
-	board[i] = NULL;
-	return (board);
+}*/
+
+int isfree_coord(player_info_t *player, int row, int col, int **board)
+{
+	int p = player->player + 5;
+	if (board[row][col] == 0)
+	{
+
+		board[row][col] = p;
+		return (1);
+	}
+	printf("Cell occupied\n");
+	return (0);
 }
 
-int	main(void)
+int get_input(int min, int max)
 {
-	char **board;
-	int	**players;
-	int *piece;
-	int	*block;
+	int nbr;
+	char *buffer;
+    size_t bufsize = 1;
 
-	players = (int**)malloc(sizeof(int*) * 4);
-	players[0] = (int*)malloc(sizeof(int) * 2);
-	players[0][0] = 1;
-	players[0][1] = 2;
-	players[1] = (int*)malloc(sizeof(int) * 2);
-	players[1][0] = 1;
-	players[1][1] = 1;
-	players[2] = (int*)malloc(sizeof(int) * 2);
-	players[2][0] = 0;
-	players[2][1] = 0;
-	players[3] = (int*)malloc(sizeof(int) * 2);
-	players[3][0] = 4;
-	players[3][1] = 2;
-	piece = (int*)malloc(sizeof(int) * 2);
-	piece[0] = 1;
-	piece[1] = 1;
-	block = (int*)malloc(sizeof(int) * 2);
-	block[0] = 1;
-	block[1] = 2;
-	board = get_board();
-	int i = 0;
-	while (i < 4)
-		change_player_coordinates_for_board(players[i++]);
-	change_block_and_dome_coordinates(piece);
-	change_block_and_dome_coordinates(block);
-	add_dome_letters_to_board(board, piece);
-	add_block_letters_to_board(board, block, '2');
-	print_board(board, players);
+    do {
+        buffer = (char *)malloc(bufsize * sizeof(char));
+        getline(&buffer, &bufsize, stdin);
+		if ((atoi(buffer) > max || atoi(buffer) < min))
+			printf("Choose input between (%d - %d)\n", min, max);
+	} while((atoi(buffer) > max || atoi(buffer) < min));
+
+	nbr = atoi(buffer);
+	free(buffer);
+	if (nbr >= min && nbr <= max)
+		return nbr - 1;
+	return (-1);
+}
+
+int isstring(char *str)
+{
+	while (*str)
+	{
+		if (!isalpha(*str))
+			return (0);
+	}
+	return (1);
+}
+
+int get_command()
+{
+	int worker;
+	char *buffer;
+    size_t bufsize = 2;
+
+	printf("Choose worker: ");
+    worker = get_input(1, 2) + 1;
+	printf("\nChoose direction to move: ");
+
+    // do {
+        buffer = (char *)malloc(bufsize * sizeof(char));
+        getline(&buffer, &bufsize, stdin);
+		buffer[2] = '\0';
+		printf("%s", buffer);
+		printf("%lu", strlen(buffer));
+		if (strlen(buffer) != 3 && !isstring(buffer))
+			printf("Invalid direction");
+	// } while(strlen(buffer) != 3 && !isstring(buffer));
+	return (worker);
+}
+
+char **init_players(player_info_t *p1, player_info_t *p2, int **board)
+{
+	int wrow;
+	int wcol;
+	char **new_board;
+	p1->player = 1;
+	p2->player = 2;
+	printf("Player 1 enter worker starting coordinates\n");
+//	return ;
+	do {
+		printf("Worker 1 starting row: ");
+		wrow = get_input(1, 5);
+		printf("Worker 1 starting col: ");
+		wcol = get_input(1, 5);
+	} while(!isfree_coord(p1, wrow, wcol, board));
+
+	p1->w1row = wrow;
+	p1->w1col = wcol;
+//	print_board(board);
+	new_board = get_board();
+	drawing(p1, p2, new_board);
+
+	printf("\n");
+	do {
+		printf("Worker 2 starting row: ");
+		wrow = get_input(1, 5);
+		printf("Worker 2 starting col: ");
+		wcol = get_input(1, 5);
+	} while(!isfree_coord(p1, wrow, wcol, board));
+
+	p1->w2row = wrow;
+	p1->w2col = wcol;
+//	print_board(board);
+	drawing(p1, p2, new_board);
+
+	printf("Player 2 enter worker starting coordinates\n");
+
+	do {
+		printf("Worker 1 starting row: ");
+		wrow = get_input(1, 5);
+		printf("Worker 1 starting col: ");
+		wcol = get_input(1, 5);
+	} while(!isfree_coord(p2, wrow, wcol, board));
+
+	p2->w1row = wrow;
+	p2->w1col = wcol;
+//	print_board(board);
+	drawing(p1, p2, new_board);
+
+	printf("\n");
+	do {
+		printf("Worker 2 starting row: ");
+		wrow = get_input(1, 5);
+		printf("Worker 2 starting col: ");
+		wcol = get_input(1, 5);
+	} while(!isfree_coord(p2, wrow, wcol, board));
+
+	p2->w2row = wrow;
+	p2->w2col = wcol;
+//	print_board(board);
+	drawing(p1, p2, new_board);
+	return (new_board);
+}
+
+void init_board(int **board)
+{
+	for (int row = 0; row < 5; row++)
+	{
+		board[row] = malloc(sizeof(int) * 5);
+		for (int col = 0; col < 5; col++)
+		{
+			board[row][col] = 0;
+		}
+	}
+}
+
+int main(void)
+{
+	int **board = (int **)malloc(sizeof(int) * 7);
+	player_info_t *p1 = (player_info_t *)malloc(sizeof(player_info_t));
+	player_info_t *p2 = (player_info_t *)malloc(sizeof(player_info_t));
+
+	init_board(board);
+	p1->w2row = -1;
+	p1->w2col = -1;
+	p2->w1row = -1;
+	p2->w1col = -1;
+	p2->w2row = -1;
+	p2->w2col = -1;
+	char **new_board = init_players(p1, p2, board);
+	get_command();
+
+	// free(p1);
+	// free(p2);
+	// free(board);
 	return (0);
 }

@@ -13,7 +13,7 @@ void	print_dome(char **arr)
 // panda "U+1F43C" -> "\U0001F43C"
 // bee "U+1F41D" -> "\U0001F41D"
 //
-void	print_board(char **arr, int **players)
+void	print_board(char **arr, int players[4][2])
 {
 //	int start_x[5] = {1, 8, 15, 22, 29};
 //	int start_y[5] = {1, 5, 9, 13, 17};
