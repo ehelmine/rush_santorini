@@ -1,5 +1,5 @@
 #include "santorini.h"
-
+/*
 //
 // unicorn	"\u1f984" -> "\U0001f984"
 // superhero "U+1F9B8" -> "\U0001f9B8"
@@ -10,15 +10,14 @@
 // bee "U+1F41D" -> "\U0001F41D"
 // eggplant "U+1F346" -> "\U0001F346"
 // peach "U+1F351" -> "\U0001F351"
-//
+//*/
 void	print_board(char **arr, int players[4][2])
 {
-//	int start_x[5] = {1, 8, 15, 22, 29};
-//	int start_y[5] = {1, 5, 9, 13, 17};
-	int y = 0;
+	int y = 1;
 	int x = 0;
 	int i = 0;
 	int ii = 0;
+	printf("------------------------------------\n");
 	while (arr[y] != NULL)
 	{
 		while (arr[y][x] != '\0')
@@ -28,7 +27,7 @@ void	print_board(char **arr, int players[4][2])
 			{
 				if (players[i][0] == x && players[i][1] == y)
 				{
-					if (i == 0)  // unicorn
+					if (i == 0) // unicorn
 					{
 						if (arr[y][x] == '1')
 							printf(WHITE "\U0001f984" COLOR_RESET);
@@ -81,6 +80,7 @@ void	print_board(char **arr, int players[4][2])
 							printf("\U0001F351");
 					}
 					x += 2;
+					break ;
 				}
 				i++;
 			}

@@ -16,6 +16,19 @@ void print_board(int **board)
 		printf("\n");
 	}
 }*/
+int isdirection(char *str)
+{
+	str[0] = toupper(str[0]);
+	str[1] = toupper(str[1]);
+
+	char *dirs[] = {"N", "NE", "E", "SE", "S", "SW", "W", "NW"};
+	for (int i = 0; i < 8; i++)
+	{
+		if (!strcmp(dirs[i], str))
+			return (i);
+	}
+	return (-1);
+}
 
 int isfree_coord(player_info_t *player, int row, int col, int **board)
 {
@@ -34,11 +47,11 @@ int get_input(int min, int max)
 {
 	int nbr;
 	char *buffer;
-    size_t bufsize = 1;
+	size_t bufsize = 1;
 
-    do {
-        buffer = (char *)malloc(bufsize * sizeof(char));
-        getline(&buffer, &bufsize, stdin);
+	do {
+		buffer = (char *)malloc(bufsize * sizeof(char));
+		getline(&buffer, &bufsize, stdin);
 		if ((atoi(buffer) > max || atoi(buffer) < min))
 			printf("Choose input between (%d - %d)\n", min, max);
 	} while((atoi(buffer) > max || atoi(buffer) < min));
@@ -60,26 +73,97 @@ int isstring(char *str)
 	return (1);
 }
 
-int get_command()
+int    *is_valid_move(int dir, player_info_t *player, int worker)
+{
+	int offsets[8][2] = {
+	{0, -1},
+	{1, -1},
+	{ 1, 0},
+	{ 1, 1},
+	{ 0, 1},
+	{ -1, 1},
+	{ -1, 0},
+	{-1,-1}};
+	int wrow;
+	int wcol;
+	if (worker == 1)
+	{
+		wrow = player->w1row;
+		wcol = player->w1col;
+	}
+	else if (worker == 2)
+	{
+		wrow = player->w2row;
+		wcol = player->w2col;
+	}
+
+	int *target;
+	target = (int *)malloc(sizeof(int) * 2);
+	target[0] = offsets[dir][0] + wcol;
+	target[1] = offsets[dir][1] + wrow;	
+	if (target[0] < 0 || target[0] > 4 || target[1] < 0 || target[1] > 4)
+	{
+		printf("not good value\n");
+		return (NULL);
+	}
+	return (target);
+}
+
+int get_command(player_info_t *player, char **new_board, player_info_t *another, int who)
 {
 	int worker;
 	char *buffer;
-    size_t bufsize = 2;
+	size_t bufsize;
+	int mvdir;
+	int bdir;
+	int *block;
 
 	printf("Choose worker: ");
-    worker = get_input(1, 2) + 1;
+	worker = get_input(1, 2) + 1;
 	printf("\nChoose direction to move: ");
 
-    // do {
-        buffer = (char *)malloc(bufsize * sizeof(char));
-        getline(&buffer, &bufsize, stdin);
-		buffer[2] = '\0';
-		printf("%s", buffer);
-		printf("%lu", strlen(buffer));
-		if (strlen(buffer) != 3 && !isstring(buffer))
-			printf("Invalid direction");
-	// } while(strlen(buffer) != 3 && !isstring(buffer));
-	return (worker);
+	move:
+		do {
+			getline(&buffer, &bufsize, stdin);
+			if (strlen(buffer) == 2)
+				buffer[1] = '\0';
+			else
+				buffer[2] = '\0';
+			mvdir = isdirection(buffer);
+			if (mvdir < 0)
+				printf("Invalid direction\n");
+		} while(mvdir < 0);
+	block = is_valid_move(mvdir, player, worker);
+	if (who == 1)
+	{
+		player->w1row = block[0];
+		player->w1col = block[1];
+		drawing(player, another, new_board, 0);
+	}
+	else if (who == 2)
+	{
+		player->w2row = block[0];
+		player->w2col = block[1];
+		drawing(another, player, new_board, 0);
+	}
+	printf("\nChoose direction to build: ");
+	
+	build:
+		do {
+			getline(&buffer, &bufsize, stdin);
+			if (strlen(buffer) == 2)
+			    buffer[1] = '\0';
+			else
+			    buffer[2] = '\0';
+			bdir = isdirection(buffer);
+			if (bdir < 0)
+			    printf("Invalid direction\n");
+		} while(bdir < 0);
+
+	block = is_valid_move(mvdir, player, worker);
+	change_block_coordinates(block);
+	add_level_letters_to_board(new_board, block);
+	return (0);
 }
 
 char **init_players(player_info_t *p1, player_info_t *p2, int **board)
@@ -166,24 +250,20 @@ int main(void)
 	player_info_t *p2 = (player_info_t *)malloc(sizeof(player_info_t));
 
 	init_board(board);
+	p1->w1col = -1;
+	p1->w1row = -1;
 	p1->w2row = -1;
 	p1->w2col = -1;
 	p2->w1row = -1;
 	p2->w1col = -1;
 	p2->w2row = -1;
 	p2->w2col = -1;
-	char **new_board = init_players(p1, p2, board);
+	char **new_board;
+	new_board = init_players(p1, p2, board);
 	while (1)
 	{
-		get_command();
-	//	change_block_coordinates(block); <- lahetetaan tanne sen rakennettavan asian koordinaatit
-	//										jotka on saatu inputtina (lahetysformaattia voi
-	//										muuttaa, nyt se on int *)
-	//	add_level_letters_to_board(new_board, block, level); <- taalla muokataan char **new_boardia
-	//													esim jos laitetaan ruutuun 1,1
-	//													level2:n taso -> taytetaan 1,1 ruutu
-	//													charilla 2
-		drawing(p1, p2, new_board, whose_turn_next); // <- ja taalla piirretaan
+		get_command(p1, new_board, p2, 1);
+		get_command(p2, new_board, p1, 2);
 	}
 
 	// free(p1);

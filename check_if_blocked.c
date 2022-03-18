@@ -119,7 +119,7 @@ void	check_if_player_is_blocked(char **board, int players[4][2], int whose_turn_
 	}
 	winner = 2;
 	loser = 1;
-	if (y == 0 || y == 1)
+	if (whose_turn_next == 2)
 	{
 		winner = 1;
 		loser = 2;

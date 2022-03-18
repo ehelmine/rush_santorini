@@ -29,7 +29,7 @@ char	**get_board(void);
 void	drawing(player_info_t *p1, player_info_t *p2, char **board, int whose_turn_next);
 void	change_player_coordinates_for_board(int *player);
 void	change_block_coordinates(int *piece);
-void	add_level_letters_to_board(char **board, int *level_coord, char level);
+void	add_level_letters_to_board(char **board, int *level_coord);
 void	print_board(char **board, int players[4][2]);
 void	check_if_player_is_blocked(char **board, int players[4][2], int whose_turn_next);
 
