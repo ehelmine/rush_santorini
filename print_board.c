@@ -99,5 +99,5 @@ void	print_board(char **arr, int players[4][2])
 		y++;
 		x = 0;
 	}
-//	printf("\n");
+	printf("Lvl1:" WHITE "  " COLOR_RESET " Lvl2:" CYAN "  " COLOR_RESET " Lvl3:" BLUE "  " COLOR_RESET " Dome:" RED "  " COLOR_RESET "\n");
 }
