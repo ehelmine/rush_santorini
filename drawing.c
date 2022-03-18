@@ -48,10 +48,6 @@ void	drawing(player_info_t *p1, player_info_t *p2, char **board)
 	int i = 0;
 	while (i < 4)
 		change_player_coordinates_for_board(players[i++]);
-//	change_block_and_dome_coordinates(piece);
-//	change_block_and_dome_coordinates(block);
-//	add_dome_letters_to_board(board, piece);
-//	add_block_letters_to_board(board, block, '2');
 	print_board(board, players);
 	if (players[3][1] != -1)
 		check_if_player_is_blocked(board, players);

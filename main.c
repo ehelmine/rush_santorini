@@ -175,7 +175,14 @@ int main(void)
 	while (1)
 	{
 		get_command();
-		drawing(p1, p2, new_board);
+	//	change_block_coordinates(block); <- lahetetaan tanne sen rakennettavan asian koordinaatit
+	//										jotka on saatu inputtina (lahetysformaattia voi
+	//										muuttaa, nyt se on int *)
+	//	add_level_letters_to_board(new_board, block, level); <- taalla muokataan char **new_boardia
+	//													esim jos laitetaan ruutuun 1,1
+	//													level2:n taso -> taytetaan 1,1 ruutu
+	//													charilla 2
+		drawing(p1, p2, new_board); // <- ja taalla piirretaan
 	}
 
 	// free(p1);
