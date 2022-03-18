@@ -172,7 +172,11 @@ int main(void)
 	p2->w2row = -1;
 	p2->w2col = -1;
 	char **new_board = init_players(p1, p2, board);
-	get_command();
+	while (1)
+	{
+		get_command();
+		drawing(p1, p2, new_board);
+	}
 
 	// free(p1);
 	// free(p2);

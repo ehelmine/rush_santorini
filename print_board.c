@@ -1,9 +1,5 @@
 #include "santorini.h"
 
-void	print_dome(char **arr)
-{
-
-}
 //
 // unicorn	"\u1f984" -> "\U0001f984"
 // superhero "U+1F9B8" -> "\U0001f9B8"
@@ -12,6 +8,8 @@ void	print_dome(char **arr)
 // fox "U+1F98A" -> "\U0001F98A"
 // panda "U+1F43C" -> "\U0001F43C"
 // bee "U+1F41D" -> "\U0001F41D"
+// eggplant "U+1F346" -> "\U0001F346"
+// peach "U+1F351" -> "\U0001F351"
 //
 void	print_board(char **arr, int players[4][2])
 {
@@ -43,20 +41,7 @@ void	print_board(char **arr, int players[4][2])
 						else
 							printf("\U0001f984");
 					}
-					if (i == 1)  // panda
-					{
-						if (arr[y][x] == '1')
-							printf(WHITE "\U0001F43C" COLOR_RESET);
-						else if (arr[y][x] == '2')
-							printf(CYAN "\U0001F43C" COLOR_RESET);
-						else if (arr[y][x] == '3')
-							printf(BLUE "\U0001F43C" COLOR_RESET);
-						else if (arr[y][x] == 'D')
-							printf(RED "\U0001F43C" COLOR_RESET);
-						else
-							printf("\U0001F43C");
-					}
-					if (i == 2)  // bee
+					if (i == 1)  // bee
 					{
 						if (arr[y][x] == '1')
 							printf(WHITE "\U0001F41D" COLOR_RESET);
@@ -69,18 +54,31 @@ void	print_board(char **arr, int players[4][2])
 						else
 							printf("\U0001F41D");
 					}
-					if (i == 3) // fox
+					if (i == 2)  // eggplant
 					{
 						if (arr[y][x] == '1')
-							printf(WHITE "\U0001F98A" COLOR_RESET);
+							printf(WHITE "\U0001F346" COLOR_RESET);
 						else if (arr[y][x] == '2')
-							printf(CYAN "\U0001F98A" COLOR_RESET);
+							printf(CYAN "\U0001F346" COLOR_RESET);
 						else if (arr[y][x] == '3')
-							printf(BLUE "\U0001F98A" COLOR_RESET);
+							printf(BLUE "\U0001F346" COLOR_RESET);
 						else if (arr[y][x] == 'D')
-							printf(RED "\U0001F98A" COLOR_RESET);
+							printf(RED "\U0001F346" COLOR_RESET);
 						else
-							printf("\U0001F98A");
+							printf("\U0001F346");
+					}
+					if (i == 3) // peach
+					{
+						if (arr[y][x] == '1')
+							printf(WHITE "\U0001F351" COLOR_RESET);
+						else if (arr[y][x] == '2')
+							printf(CYAN "\U0001F351" COLOR_RESET);
+						else if (arr[y][x] == '3')
+							printf(BLUE "\U0001F351" COLOR_RESET);
+						else if (arr[y][x] == 'D')
+							printf(RED "\U0001F351" COLOR_RESET);
+						else
+							printf("\U0001F351");
 					}
 					x += 2;
 				}

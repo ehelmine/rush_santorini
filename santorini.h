@@ -32,5 +32,6 @@ void	change_block_and_dome_coordinates(int *piece);
 void	add_dome_letters_to_board(char **board, int *dome);
 void	add_block_letters_to_board(char **board, int *block, char level);
 void	print_board(char **board, int players[4][2]);
+void	check_if_player_is_blocked(char **board, int players[4][2]);
 
 #endif

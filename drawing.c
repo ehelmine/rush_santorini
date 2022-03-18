@@ -53,4 +53,6 @@ void	drawing(player_info_t *p1, player_info_t *p2, char **board)
 //	add_dome_letters_to_board(board, piece);
 //	add_block_letters_to_board(board, block, '2');
 	print_board(board, players);
+	if (players[3][1] != -1)
+		check_if_player_is_blocked(board, players);
 }
